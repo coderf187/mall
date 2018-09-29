@@ -1,0 +1,59 @@
+package com.jianf.commons.utils;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class IpAddressUtil {
+
+    public static String getIpAddress() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if(attributes == null){
+            return "unknown";
+        }
+
+        HttpServletRequest request = attributes.getRequest();
+        if(request == null){
+            return "unknown";
+        }
+        String Xip = request.getHeader("x-real-ip");
+        if(StringUtils.isNotEmpty(Xip) && !"unKnown".equalsIgnoreCase(Xip)){
+            return Xip;
+        }
+        return request.getRemoteAddr();
+
+//        String Xip = request.getHeader("X-Real-IP");
+//        String XFor = request.getHeader("X-Forwarded-For");
+//        if(StringUtils.isNotEmpty(XFor) && !"unKnown".equalsIgnoreCase(XFor)){
+//            //多次反向代理后会有多个ip值，第一个ip才是真实ip
+//            int index = XFor.indexOf(",");
+//            if(index != -1){
+//                return XFor.substring(0,index);
+//            }else{
+//                return XFor;
+//            }
+//        }
+//        XFor = Xip;
+//        if(StringUtils.isNotEmpty(XFor) && !"unKnown".equalsIgnoreCase(XFor)){
+//            return XFor;
+//        }
+//        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+//            XFor = request.getHeader("Proxy-Client-IP");
+//        }
+//        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+//            XFor = request.getHeader("WL-Proxy-Client-IP");
+//        }
+//        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+//            XFor = request.getHeader("HTTP_CLIENT_IP");
+//        }
+//        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+//            XFor = request.getHeader("HTTP_X_FORWARDED_FOR");
+//        }
+//        if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
+//            XFor = request.getRemoteAddr();
+//        }
+//        return XFor;
+    }
+}

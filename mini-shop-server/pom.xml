@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jianf</groupId>
+    <artifactId>mini-shop-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>mini-shop-server</name>
+    <description>Demo project for Spring Boot</description>
+
+    <parent>
+        <groupId>com.jianf</groupId>
+        <artifactId>mall</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jianf</groupId>
+            <artifactId>commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- spring cloud eureka hystrix -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profiles.active>config,dev</profiles.active>
+                <config.branch>dev</config.branch>
+                <!--配置中心地址-->
+                <!--<config.url>http://t.config.pub.puhuifinance.com:8888</config.url>-->
+                <!--mrabbitmq集群地址-->
+                <rabbitmq.addresses></rabbitmq.addresses>
+                <rabbitmq.virtual-host>public</rabbitmq.virtual-host>
+                <rabbitmq.publisher-confirms>true</rabbitmq.publisher-confirms>
+            </properties>
+        </profile>
+        <profile>
+            <id>beta</id>
+            <properties>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+            </properties>
+        </profile>
+    </profiles>
+</project>
